@@ -25,7 +25,7 @@ class WorkspaceManager:
         self,
         venture_id: int,
         venture_name: str,
-        metadata: Optional[Dict[str, Any]] = None
+        extra_data: Optional[Dict[str, Any]] = None
     ) -> str:
         """
         Create a new workspace for a venture/product.
@@ -33,7 +33,7 @@ class WorkspaceManager:
         Args:
             venture_id: Venture/opportunity ID
             venture_name: Name of the venture
-            metadata: Additional metadata
+            extra_data: Additional metadata
 
         Returns:
             Path to workspace
@@ -69,7 +69,7 @@ class WorkspaceManager:
             "venture_name": venture_name,
             "created_at": datetime.utcnow().isoformat(),
             "workspace_path": str(workspace_path),
-            "metadata": metadata or {},
+            "extra_data": extra_data or {},
             "structure": folders
         }
 
