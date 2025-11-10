@@ -38,6 +38,29 @@ class Settings(BaseSettings):
     min_profit_margin: float = Field(default=0.15, env="MIN_PROFIT_MARGIN")
     opportunity_scan_interval_minutes: int = Field(default=30, env="OPPORTUNITY_SCAN_INTERVAL_MINUTES")
 
+    # Agent Evaluator Settings
+    agent_min_success_rate: float = Field(default=0.4, env="AGENT_MIN_SUCCESS_RATE")
+    agent_max_idle_minutes: int = Field(default=60, env="AGENT_MAX_IDLE_MINUTES")
+    agent_evaluation_interval: int = Field(default=3, env="AGENT_EVALUATION_INTERVAL")
+
+    # Razorpay Configuration (Payment Gateway)
+    razorpay_enabled: bool = Field(default=False, env="RAZORPAY_ENABLED")
+    razorpay_key_id: str = Field(default="", env="RAZORPAY_KEY_ID")
+    razorpay_key_secret: str = Field(default="", env="RAZORPAY_KEY_SECRET")
+    razorpay_account_number: str = Field(default="", env="RAZORPAY_ACCOUNT_NUMBER")
+    razorpay_callback_url: str = Field(default="http://localhost:8000/api/payment/callback", env="RAZORPAY_CALLBACK_URL")
+
+    # DigitalOcean Configuration (Cloud Deployment)
+    digitalocean_enabled: bool = Field(default=False, env="DIGITALOCEAN_ENABLED")
+    digitalocean_api_token: str = Field(default="", env="DIGITALOCEAN_API_TOKEN")
+    digitalocean_ssh_key_id: Optional[str] = Field(default=None, env="DIGITALOCEAN_SSH_KEY_ID")
+    digitalocean_default_region: str = Field(default="blr1", env="DIGITALOCEAN_DEFAULT_REGION")
+
+    # Real Business Mode
+    real_business_mode: bool = Field(default=False, env="REAL_BUSINESS_MODE")
+    use_real_payments: bool = Field(default=False, env="USE_REAL_PAYMENTS")
+    use_real_deployment: bool = Field(default=False, env="USE_REAL_DEPLOYMENT")
+
     # Security
     api_key: str = Field(default="dev-key", env="API_KEY")
 
