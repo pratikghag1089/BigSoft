@@ -144,9 +144,9 @@ class AgentEvaluator:
         self.agent_factory.delete_agent(agent.id)
 
         # Log termination in metadata
-        agent.metadata = agent.metadata or {}
-        agent.metadata["termination_reason"] = reason
-        agent.metadata["terminated_at"] = datetime.utcnow().isoformat()
+        agent.extra_data = agent.extra_data or {}
+        agent.extra_data["termination_reason"] = reason
+        agent.extra_data["terminated_at"] = datetime.utcnow().isoformat()
 
         self.db_session.commit()
 
@@ -224,8 +224,8 @@ class AgentEvaluator:
 
         termination_reasons = {}
         for agent in terminated:
-            if agent.metadata and "termination_reason" in agent.metadata:
-                reason = agent.metadata["termination_reason"]
+            if agent.extra_data and "termination_reason" in agent.extra_data:
+                reason = agent.extra_data["termination_reason"]
                 termination_reasons[reason] = termination_reasons.get(reason, 0) + 1
 
         return {

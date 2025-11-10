@@ -71,8 +71,8 @@ class Agent(Base):
     success_rate = Column(Float, default=0.0)
     total_runtime_seconds = Column(Float, default=0.0)
 
-    # Metadata
-    metadata = Column(JSON, default=dict)
+    # Additional data
+    extra_data = Column(JSON, default=dict)
 
     # Relationships
     tasks = relationship("Task", back_populates="agent", cascade="all, delete-orphan")
@@ -149,10 +149,10 @@ class Opportunity(Base):
     strategy = Column(Text, nullable=True)
     action_plan = Column(JSON, default=list)
 
-    # Metadata
+    # Additional fields
     category = Column(String(100), nullable=True)
     tags = Column(JSON, default=list)
-    metadata = Column(JSON, default=dict)
+    extra_data = Column(JSON, default=dict)
 
     # Relationships
     tasks = relationship("Task", back_populates="opportunity", cascade="all, delete-orphan")
@@ -175,8 +175,8 @@ class Metric(Base):
     # Timestamp
     recorded_at = Column(DateTime, default=datetime.utcnow)
 
-    # Metadata
-    metadata = Column(JSON, default=dict)
+    # Additional data
+    extra_data = Column(JSON, default=dict)
 
 
 class SystemState(Base):
@@ -188,4 +188,4 @@ class SystemState(Base):
     key = Column(String(255), unique=True, nullable=False)
     value = Column(JSON, nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    metadata = Column(JSON, default=dict)
+    extra_data = Column(JSON, default=dict)

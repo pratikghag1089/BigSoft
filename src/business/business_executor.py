@@ -47,7 +47,7 @@ class BusinessExecutor:
         workspace_path = self.workspace_manager.create_workspace(
             venture_id=opportunity.id,
             venture_name=opportunity.title,
-            metadata={
+            extra_data={
                 "category": opportunity.category,
                 "estimated_revenue": opportunity.potential_revenue,
                 "estimated_cost": opportunity.estimated_cost
@@ -193,7 +193,7 @@ Respond in JSON format:
                     opportunity_id=opportunity.id,
                     priority=10 - i,  # Earlier milestones have higher priority
                     status=TaskStatus.PENDING,
-                    metadata={
+                    extra_data={
                         "milestone": milestone.get("name", f"Milestone {i+1}"),
                         "deliverables": milestone.get("deliverables", []),
                         "timeline_days": milestone.get("timeline_days", 7)

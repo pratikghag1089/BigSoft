@@ -87,7 +87,7 @@ Respond with ONLY a valid JSON array. No other text.
                     confidence_score=float(opp_data.get("confidence_score", 0.5)),
                     strategy=opp_data.get("strategy", ""),
                     status=OpportunityStatus.IDENTIFIED,
-                    metadata={
+                    extra_data={
                         "requirements": opp_data.get("requirements", []),
                         "identified_by": "opportunity_engine"
                     }
@@ -157,9 +157,9 @@ Respond in JSON format with these keys.
             opportunity.evaluated_at = datetime.utcnow()
 
             # Store evaluation in metadata
-            if not opportunity.metadata:
-                opportunity.metadata = {}
-            opportunity.metadata["evaluation"] = evaluation
+            if not opportunity.extra_data:
+                opportunity.extra_data = {}
+            opportunity.extra_data["evaluation"] = evaluation
 
             self.db_session.commit()
 

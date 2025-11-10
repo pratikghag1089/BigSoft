@@ -58,7 +58,7 @@ class MasterEntrepreneurAgent(BaseAgent):
             state = SystemState(
                 key="capital",
                 value={"amount": self.capital, "currency": "USD"},
-                metadata={"initialized_at": datetime.utcnow().isoformat()}
+                extra_data={"initialized_at": datetime.utcnow().isoformat()}
             )
             self.db_session.add(state)
             self.db_session.commit()
@@ -442,7 +442,7 @@ Respond ONLY with a valid JSON array of opportunities.
             metric_name="cycle_performance",
             value=performance.get("roi_percent", 0),
             category="business_cycle",
-            metadata={
+            extra_data={
                 "cycle": cycle,
                 **performance
             }

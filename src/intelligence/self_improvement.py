@@ -171,7 +171,7 @@ Respond in JSON format with structure:
                 metric_name=f"optimization_{area}",
                 value=1 if result.get("success") else 0,
                 category="optimization",
-                metadata=result
+                extra_data=result
             )
             self.db_session.add(metric)
             self.db_session.commit()

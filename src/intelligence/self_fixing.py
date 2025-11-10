@@ -203,13 +203,13 @@ class SelfFixingEngine:
         logger.info("Fixing timeout error")
 
         # Increase timeout in task metadata
-        if not task.metadata:
-            task.metadata = {}
+        if not task.extra_data:
+            task.extra_data = {}
 
-        current_timeout = task.metadata.get("timeout", 300)
+        current_timeout = task.extra_data.get("timeout", 300)
         new_timeout = min(current_timeout * 2, 1800)  # Max 30 minutes
 
-        task.metadata["timeout"] = new_timeout
+        task.extra_data["timeout"] = new_timeout
         task.status = TaskStatus.PENDING
         task.error_message = None
 
@@ -247,14 +247,14 @@ class SelfFixingEngine:
         logger.info("Fixing API error")
 
         # Implement exponential backoff
-        if not task.metadata:
-            task.metadata = {}
+        if not task.extra_data:
+            task.extra_data = {}
 
-        retry_count = task.metadata.get("retry_count", 0)
+        retry_count = task.extra_data.get("retry_count", 0)
         backoff_seconds = min(2 ** retry_count, 60)  # Max 60 seconds
 
-        task.metadata["retry_count"] = retry_count + 1
-        task.metadata["backoff_seconds"] = backoff_seconds
+        task.extra_data["retry_count"] = retry_count + 1
+        task.extra_data["backoff_seconds"] = backoff_seconds
         task.status = TaskStatus.PENDING
         task.error_message = None
 
@@ -308,10 +308,10 @@ Respond in JSON format with keys: root_cause, fix_strategy, action (retry/cancel
             elif action == "modify":
                 # Apply suggested modifications
                 adjustments = fix_plan.get("adjustments", {})
-                if not task.metadata:
-                    task.metadata = {}
+                if not task.extra_data:
+                    task.extra_data = {}
 
-                task.metadata["llm_adjustments"] = adjustments
+                task.extra_data["llm_adjustments"] = adjustments
                 task.status = TaskStatus.PENDING
                 task.error_message = None
 
@@ -362,7 +362,7 @@ Respond in JSON format with keys: root_cause, fix_strategy, action (retry/cancel
             metric_name="successful_fix",
             value=1,
             category="error_recovery",
-            metadata=fix_record
+            extra_data=fix_record
         )
         self.db_session.add(metric)
         self.db_session.commit()

@@ -53,7 +53,7 @@ class BaseAgent(ABC):
             agent = self.db_session.query(AgentModel).filter_by(id=self.agent_id).first()
             if agent:
                 agent.status = self.status
-                agent.metadata = self.context
+                agent.extra_data = self.context
         else:
             # Create new
             agent = AgentModel(
@@ -63,7 +63,7 @@ class BaseAgent(ABC):
                 role=self.role,
                 capabilities=self.capabilities,
                 parent_agent_id=self.parent_agent_id,
-                metadata=self.context,
+                extra_data=self.context,
             )
             self.db_session.add(agent)
             self.db_session.flush()

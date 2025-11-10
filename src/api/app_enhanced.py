@@ -228,7 +228,7 @@ def create_enhanced_app() -> FastAPI:
                     "value": m.value,
                     "category": m.category,
                     "recorded_at": m.recorded_at.isoformat(),
-                    "metadata": m.metadata
+                    "extra_data": m.extra_data
                 }
                 for m in recent_metrics
             ]
